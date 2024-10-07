@@ -1,16 +1,15 @@
 ﻿using Domain.Shared.Entity;
-using Domain.Shared.Interface;
 
 namespace Domain.Entity
 {
-    public class Medico : EntityBase, IPersonBase
+    public class Medico : Person
     {
-        string IPersonBase.Nome { get; set; }
-        int IPersonBase.Idade { get; set; }
-        string IPersonBase.Endereco { get; set; }
-        string IPersonBase.Telefone { get; set; }
-        string IPersonBase.CPF { get; set; }
-        string IPersonBase.Genero { get; set; }
         public string CRM { get; set; }
+        public override string Nome { get; set; }
+        public override int Idade { get; set; }
+        public override string Endereco { get; set; }
+        public override string Telefone { get; set; }
+        public override string CPF { get; set; }
+        public override string Genero { get; set; }
     }
 }

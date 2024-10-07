@@ -1,6 +1,6 @@
 ﻿namespace Domain.Shared.Interface
 {
-    public interface IPersonBase
+    public interface Person
     {
         public string Nome { get; set; }
         public int Idade { get; set; }
