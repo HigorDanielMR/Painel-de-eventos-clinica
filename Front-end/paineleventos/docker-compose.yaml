@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  uipaineleventos:
+    build:
+      context: .
+    container_name: uipaineleventos
+    ports:
+      - 7070:80
+    image: matheushenrique35/painel-eventos-ui
