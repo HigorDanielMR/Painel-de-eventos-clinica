@@ -6,6 +6,13 @@
         public DateTime DataCriacao { get; protected set; }
         public DateTime DataAtualizacao { get; protected set; }
 
+        protected EntityBase()
+        {
+            Validar();   
+        }
+
+        protected abstract void Validar();
+
         public void AdicionarDataCriacao()
         {
             DataCriacao = DateTime.Now;

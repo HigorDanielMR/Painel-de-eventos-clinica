@@ -1,8 +1,8 @@
-﻿using Domain.Shared.Entity;
+﻿using Domain;
 
 namespace Domain.Entity
 {
-    public class Paciente : Person
+    public class Paciente : Pessoa
     {
         public string NumeroCartaoSUS { get; set; }
         public override string Nome { get; set; }
@@ -11,5 +11,10 @@ namespace Domain.Entity
         public override string Telefone { get; set; }
         public override string CPF { get; set; }
         public override string Genero { get; set; }
+
+        protected override void Validar()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
