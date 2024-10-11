@@ -1,5 +1,4 @@
 ﻿using Application.DTOs;
-using ErrorOr;
 
 namespace Application.Interface;
 
