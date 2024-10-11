@@ -28,7 +28,6 @@ public class PacienteService : IPacienteService
         paciente = await _pacienteRepository.Atualizar(paciente);
 
         return paciente.Adapt<PacienteDTO>();
-
     }
 
     public async Task<PacienteDTO> Create(CreatePacienteDTO createPacienteDTO)

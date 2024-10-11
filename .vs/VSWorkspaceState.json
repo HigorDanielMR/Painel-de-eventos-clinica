@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Back-End",
+    "\\Back-End\\PainelEventos",
+    "\\Back-End\\PainelEventos\\Domain",
+    "\\Back-End\\PainelEventos\\Domain\\Clinica",
+    "\\Back-End\\PainelEventos\\Domain\\Clinica\\Entity",
+    "\\Back-End\\PainelEventos\\Domain\\Shared",
+    "\\Back-End\\PainelEventos\\Domain\\Shared\\Validator",
+    "\\Back-End\\PainelEventos\\WebAPI",
+    "\\Back-End\\PainelEventos\\WebAPI\\Controllers"
+  ],
+  "SelectedNode": "\\Back-End\\PainelEventos\\Application\\Medico\\DTOs\\CreateMedicoDTO.cs",
+  "PreviewInSolutionExplorer": false
+}
