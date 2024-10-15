@@ -4,8 +4,8 @@ namespace Application.Interface;
 
 public interface IClinicaService
 {
-    Task<ClinicaDTO> ObterPeloId(string id);
-    Task<ClinicaDTO> Atualizar(UpdateClinicaDTO updateClinicaDTO);
-    Task<ClinicaDTO> Create(CreateClinicaDTO createDTO);
-    Task Excluir(string id);
+    Task<Result<ClinicaDTO>> ObterPeloId(string id);
+    Task<Result<ClinicaDTO>> Atualizar(UpdateClinicaDTO updateClinicaDTO);
+    Task<Result<ClinicaDTO>> Create(CreateClinicaDTO createDTO);
+    Task<Result> Excluir(string id);
 }

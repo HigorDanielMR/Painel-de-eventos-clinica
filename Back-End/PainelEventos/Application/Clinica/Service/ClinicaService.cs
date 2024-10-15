@@ -16,44 +16,46 @@ public class ClinicaService : IClinicaService
         _clinicaRepository = clinicaRepository;
     }
 
-    public async Task<ClinicaDTO> Atualizar(UpdateClinicaDTO updateClinicaDTO)
+    public async Task<Result<ClinicaDTO>> Atualizar(UpdateClinicaDTO updateClinicaDTO)
     {
         if (!await _clinicaRepository.EntityExiste(updateClinicaDTO.Id))
-            throw new RegistroNaoExisteException();
-        
+            return Result.Failure<ClinicaDTO>(Error.NotFound("Clinica informada não existe"));
+
         var clinica = await _clinicaRepository.ObterPorId(updateClinicaDTO.Id);
 
-        clinica.Atualizar(clinica.Nome);
+        clinica.Atualizar(updateClinicaDTO.Nome);
 
         clinica = await _clinicaRepository.Atualizar(clinica);
 
-        return clinica.Adapt<ClinicaDTO>();
+        return Result.Success(clinica.Adapt<ClinicaDTO>());
     }
 
-    public async Task<ClinicaDTO> Create(CreateClinicaDTO createDTO)
+    public async Task<Result<ClinicaDTO>> Create(CreateClinicaDTO createDTO)
     {
         var clinica = new Clinica(createDTO.Nome, createDTO.CNPJ);
 
         clinica = await _clinicaRepository.Adicionar(clinica);
 
-        return clinica.Adapt<ClinicaDTO>();
+        return Result.Success(clinica.Adapt<ClinicaDTO>());
     }
 
-    public async Task Excluir(string id)
+    public async Task<Result> Excluir(string id)
     {
         if (!await _clinicaRepository.EntityExiste(id))
-            throw new RegistroNaoExisteException();
+            return Result.Failure(Error.NotFound("Clinica informada não existe"));
 
-       await _clinicaRepository.Remover(id);
+        await _clinicaRepository.Remover(id);
+
+        return Result.Success();
     }
 
-    public async Task<ClinicaDTO> ObterPeloId(string id)
+    public async Task<Result<ClinicaDTO>> ObterPeloId(string id)
     {
         if (!await _clinicaRepository.EntityExiste(id))
-            throw new RegistroNaoExisteException();
+            return Result.Failure<ClinicaDTO>(Error.NotFound("Clinica informada não existe"));
 
-        var clinica = await _clinicaRepository.ObterPorId(id);
+        Clinica? clinica = await _clinicaRepository.ObterPorId(id);
 
-        return clinica.Adapt<ClinicaDTO>();
+        return Result.Success(clinica.Adapt<ClinicaDTO>());
     }
 }

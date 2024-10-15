@@ -9,10 +9,11 @@ namespace Domain.Entity
         public string CNPJ { get; protected set; }
 
         public Clinica(string nome, string cNPJ)
-            : base()
         {
+            this.Id = Guid.NewGuid().ToString();
             Nome = nome;
             CNPJ = cNPJ;
+            this.Validar();
         }
 
         public void Atualizar(string nome)

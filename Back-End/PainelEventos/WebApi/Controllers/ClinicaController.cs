@@ -1,5 +1,4 @@
-﻿using System.Net;
-using Application.DTOs;
+﻿using Application.DTOs;
 using Application.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +12,9 @@ public class ClinicaController(IClinicaService clinicaService) : ControllerBase
     [HttpGet]
     public async Task<IActionResult> ObterPeloId(string id)
     {
-        return Ok(await clinicaService.ObterPeloId(id));
+        var result = await clinicaService.ObterPeloId(id);
+
+        return result.MapResult();
     }
 
     [HttpPost]
@@ -21,7 +22,7 @@ public class ClinicaController(IClinicaService clinicaService) : ControllerBase
     {
         var result = await clinicaService.Create(createClinicaDTO);
 
-        return StatusCode((int)HttpStatusCode.Created, result);
+        return result.MapCreatedResult();
     }
 
     [HttpPut]
@@ -29,14 +30,14 @@ public class ClinicaController(IClinicaService clinicaService) : ControllerBase
     {
         var result = await clinicaService.Atualizar(updateClinicaDTO);
 
-        return Ok(result);
+        return result.MapResult();
     }
 
     [HttpDelete]
     public async Task<IActionResult> ExcluirClinica(string id)
     {
-        await clinicaService.Excluir(id);
+        var result = await clinicaService.Excluir(id);
 
-        return Ok();
+        return result.MapResult();
     }
 }

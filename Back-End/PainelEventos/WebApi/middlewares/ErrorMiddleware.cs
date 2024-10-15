@@ -1,6 +1,4 @@
 ﻿using Domain.Shared.Exceptions;
-using Infrastructure.Configuracoes;
-using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.middlewares
 {
