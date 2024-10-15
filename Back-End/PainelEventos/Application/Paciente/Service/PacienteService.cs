@@ -16,10 +16,10 @@ public class PacienteService : IPacienteService
         _pacienteRepository = pacienteRepository;
     }
 
-    public async Task<PacienteDTO> Atualizar(UpdatePacienteDTO updatePacienteDTO)
+    public async Task<Result<PacienteDTO>> Atualizar(UpdatePacienteDTO updatePacienteDTO)
     {
         if (!await _pacienteRepository.EntityExiste(updatePacienteDTO.Id))
-            throw new RegistroNaoExisteException();
+            return Result.Failure<PacienteDTO>(Error.NotFound("Paciente informado não existe"));
 
         var paciente = await _pacienteRepository.ObterPorId(updatePacienteDTO.Id);
 
@@ -27,33 +27,35 @@ public class PacienteService : IPacienteService
 
         paciente = await _pacienteRepository.Atualizar(paciente);
 
-        return paciente.Adapt<PacienteDTO>();
+        return Result.Success(paciente.Adapt<PacienteDTO>());
     }
 
-    public async Task<PacienteDTO> Create(CreatePacienteDTO createPacienteDTO)
+    public async Task<Result<PacienteDTO>> Create(CreatePacienteDTO createPacienteDTO)
     {
         var paciente = new Paciente(createPacienteDTO.NumeroCartaoSUS, createPacienteDTO.Nome, createPacienteDTO.Idade, createPacienteDTO.Endereco, createPacienteDTO.Telefone, createPacienteDTO.CPF, createPacienteDTO.Genero);
 
         paciente = await _pacienteRepository.Adicionar(paciente);
 
-        return paciente.Adapt<PacienteDTO>();
+        return Result.Success(paciente.Adapt<PacienteDTO>());
     }
 
-    public async Task Excluir(string id)
-    {
-        if(!await _pacienteRepository.EntityExiste(id))
-            throw new RegistroNaoExisteException();
-
-        await _pacienteRepository.Remover(id);
-    }
-
-    public async Task<PacienteDTO> ObterPeloId(string id)
+    public async Task<Result> Excluir(string id)
     {
         if (!await _pacienteRepository.EntityExiste(id))
-            throw new RegistroNaoExisteException();
+            return Result.Failure(Error.NotFound("Paciene informado não existe."));
+
+        await _pacienteRepository.Remover(id);
+
+        return Result.Success();
+    }
+
+    public async Task<Result<PacienteDTO>> ObterPeloId(string id)
+    {
+        if (!await _pacienteRepository.EntityExiste(id))
+            return Result.Failure<PacienteDTO>(Error.NotFound("Paciente informado não existe."));
 
         var paciente = await _pacienteRepository.ObterPorId(id);
 
-        return paciente.Adapt<PacienteDTO>();
+        return Result.Success(paciente.Adapt<PacienteDTO>());
     }
 }

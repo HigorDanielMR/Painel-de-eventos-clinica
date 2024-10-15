@@ -15,6 +15,7 @@ namespace Domain.Entity
 
         public Paciente(string numeroCartaoSUS, string nome, int idade, string endereco, string telefone, string cPF, string genero) : base()
         {
+            this.Id = Guid.NewGuid().ToString();
             NumeroCartaoSUS = numeroCartaoSUS;
             Nome = nome;
             Idade = idade;
@@ -22,6 +23,7 @@ namespace Domain.Entity
             Telefone = telefone;
             CPF = cPF;
             Genero = genero;
+            this.Validar();
         }
 
         public void Atualizar(string nome, int idade, string genero)

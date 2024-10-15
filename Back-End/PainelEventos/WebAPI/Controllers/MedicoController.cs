@@ -1,7 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace WebApi.Controllers;
 
@@ -12,7 +11,9 @@ public class MedicoController(IMedicoService medicoService) : Controller
     [HttpGet]
     public async Task<IActionResult> ObterPorId(string Id)
     {
-        return Ok(await medicoService.ObterPeloId(Id));
+        var result = await medicoService.ObterPeloId(Id);
+
+        return result.MapResult();
     }
 
     [HttpPost]
@@ -20,7 +21,7 @@ public class MedicoController(IMedicoService medicoService) : Controller
     {
         var result = await medicoService.Create(createMedicoDTO);
 
-        return StatusCode((int)HttpStatusCode.Created, result);
+        return result.MapCreatedResult();
     }
 
     [HttpPut]
@@ -28,14 +29,14 @@ public class MedicoController(IMedicoService medicoService) : Controller
     {
         var result = await medicoService.Atualizar(updateMedicoDTO);
 
-        return Ok(result);
+        return result.MapResult();
     }
 
     [HttpDelete]
     public async Task<IActionResult> ExcluirMedico(string id)
     {
-        await medicoService.Excluir(id);
+        var result = await medicoService.Excluir(id);
 
-        return Ok();
+        return result.MapResult();
     }
 }

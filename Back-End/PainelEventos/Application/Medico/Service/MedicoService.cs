@@ -16,10 +16,10 @@ public class MedicoService : IMedicoService
         _medicoRepository = medicoRepository;
     }
 
-    public async Task<MedicoDTO> Atualizar(UpdateMedicoDTO updateMedicoDTO)
+    public async Task<Result<MedicoDTO>> Atualizar(UpdateMedicoDTO updateMedicoDTO)
     {
         if (!await _medicoRepository.EntityExiste(updateMedicoDTO.Id))
-            throw new RegistroNaoExisteException();
+            return Result.Failure<MedicoDTO>(Error.NotFound("Medico informado não existe"));
 
         var medico = await _medicoRepository.ObterPorId(updateMedicoDTO.Id);
 
@@ -27,33 +27,35 @@ public class MedicoService : IMedicoService
 
         medico = await _medicoRepository.Atualizar(medico);
 
-        return medico.Adapt<MedicoDTO>();
+        return Result.Success(medico.Adapt<MedicoDTO>());
     }
 
-    public async Task<MedicoDTO> Create(CreateMedicoDTO createMedicoDTO)
+    public async Task<Result<MedicoDTO>> Create(CreateMedicoDTO createMedicoDTO)
     {
         var medico = new Medico(createMedicoDTO.CRM, createMedicoDTO.Nome, createMedicoDTO.Idade, createMedicoDTO.Endereco, createMedicoDTO.Telefone, createMedicoDTO.CPF, createMedicoDTO.Genero);
 
         medico = await _medicoRepository.Adicionar(medico);
 
-        return medico.Adapt<MedicoDTO>();
+        return Result.Success(medico.Adapt<MedicoDTO>());
     }
 
-    public async Task Excluir(string id)
+    public async Task<Result> Excluir(string id)
     {
         if (!await _medicoRepository.EntityExiste(id))
             throw new RegistroNaoExisteException();
 
         await _medicoRepository.Remover(id);
+
+        return Result.Success();
     }
 
-    public async Task<MedicoDTO> ObterPeloId(string id)
+    public async Task<Result<MedicoDTO>> ObterPeloId(string id)
     {
         if (!await _medicoRepository.EntityExiste(id))
-            throw new RegistroNaoExisteException();
+            return Result.Failure<MedicoDTO>(Error.NotFound("Medico informado não existe."));
 
         var medico = await _medicoRepository.ObterPorId(id);
 
-        return medico.Adapt<MedicoDTO>();
+        return Result.Success(medico.Adapt<MedicoDTO>());
     }
 }

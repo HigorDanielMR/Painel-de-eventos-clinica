@@ -4,8 +4,8 @@ namespace Application.Interface;
 
 public interface IMedicoService
 {
-    Task<MedicoDTO> ObterPeloId(string id);
-    Task<MedicoDTO> Atualizar(UpdateMedicoDTO updateMedicoDTO);
-    Task<MedicoDTO> Create(CreateMedicoDTO createMedicoDTO);
-    Task Excluir(string id);
+    Task<Result<MedicoDTO>> ObterPeloId(string id);
+    Task<Result<MedicoDTO>> Atualizar(UpdateMedicoDTO updateMedicoDTO);
+    Task<Result<MedicoDTO>> Create(CreateMedicoDTO createMedicoDTO);
+    Task<Result> Excluir(string id);
 }

@@ -15,6 +15,7 @@ namespace Domain.Entity
 
         public Medico(string cRM, string nome, int idade, string endereco, string telefone, string cPF, string genero)
         {
+            this.Id = Guid.NewGuid().ToString();
             CRM = cRM;
             Nome = nome;
             Idade = idade;
@@ -22,6 +23,7 @@ namespace Domain.Entity
             Telefone = telefone;
             CPF = cPF;
             Genero = genero;
+            this.Validar();
         }
 
         public void Atualizar(string nome, int idade, string endereco, string telefone)
