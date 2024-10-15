@@ -12,7 +12,8 @@ public class PacienteController(IPacienteService pacienteService) : Controller
     [HttpGet]
     public async Task<IActionResult> ObterPeloId(string id)
     {
-        return Ok(await pacienteService.ObterPeloId(id));
+        var result = await pacienteService.ObterPeloId(id);
+        return result.MapResult();
     }
 
     [HttpPost]
@@ -20,7 +21,7 @@ public class PacienteController(IPacienteService pacienteService) : Controller
     {
         var result = await pacienteService.Create(createPacienteDTO);
 
-        return StatusCode((int)HttpStatusCode.Created, result);
+        return result.MapCreatedResult();
     }
 
     [HttpPut]
@@ -28,14 +29,14 @@ public class PacienteController(IPacienteService pacienteService) : Controller
     {
         var result = await pacienteService.Atualizar(updatePacienteDTO);
 
-        return Ok(result);
+        return result.MapResult();
     }
 
     [HttpDelete]
     public async Task<IActionResult> ExcluirClinica(string id)
     {
-        await pacienteService.Excluir(id);
+        var result = await pacienteService.Excluir(id);
 
-        return Ok();
+        return result.MapResult();
     }
 }
